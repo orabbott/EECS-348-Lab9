@@ -5,36 +5,50 @@
 #include <sstream>
 using namespace std;
 
-vector<string> split(const string& str, char delimiter) {
-    vector<string> tokens;
-    string token;
-    stringstream ss(str);
-    while (getline(ss, token, delimiter)) {
-        tokens.push_back(token);
-    }
-    return tokens;
-}
-
 int main() {
     ifstream myfile("file.txt");
     if (!myfile) {
         cerr << "Failed to open file.txt\n";
         return 1;
     }
-
     string mystr;
-    vector<vector<int>> matrix;
+    vector<vector<int>> matrix1;
+    vector<vector<int>> matrix2;
+    string nstring;
+    getline(myfile, nstring);
+    int n = stoi(nstring);
+    getline(myfile, nstring);
+
     int myint;
     while (getline(myfile, mystr)) {
-        vector<int> line;
-        stringstream ss(mystr);
-        string token;
-        while (ss >> token) {       // splits by whitespace
-            line.push_back(stoi(token));
+        if (matrix1.size() < 4) {
+            vector<int> line;
+            stringstream ss(mystr);
+            string token;
+            while (ss >> token) {
+                line.push_back(stoi(token));
+            }
+            matrix1.push_back(line); 
         }
-        matrix.push_back(line); 
+        else {
+            vector<int> line;
+            stringstream ss(mystr);
+            string token;
+            while (ss >> token) {
+                line.push_back(stoi(token));
+            }
+            matrix2.push_back(line); 
+        }
+    };
+    cout << "Matrix 1:" << endl;
+    for (vector line : matrix1) {
+        for (int num : line) {
+            cout << num << " ";
+        }
+        cout << endl;
     }
-    for (vector line : matrix) {
+    cout << "Matrix 2:" << endl;
+    for (vector line : matrix2) {
         for (int num : line) {
             cout << num << " ";
         }

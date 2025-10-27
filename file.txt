@@ -1,3 +1,5 @@
+4 // The size of the square matrix (N) and the input file should not include this comment
+
 01 02 03 04
 05 06 07 08
 09 10 11 12
