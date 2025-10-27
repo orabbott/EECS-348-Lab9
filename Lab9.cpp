@@ -5,6 +5,15 @@
 #include <sstream>
 using namespace std;
 
+void print_matrix(vector<vector<int>> matrix) {
+    for (vector line : matrix) {
+        for (int num : line) {
+            cout << num << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main() {
     ifstream myfile("file.txt");
     if (!myfile) {
@@ -41,18 +50,17 @@ int main() {
         }
     };
     cout << "Matrix 1:" << endl;
-    for (vector line : matrix1) {
-        for (int num : line) {
-            cout << num << " ";
-        }
-        cout << endl;
-    }
+    print_matrix(matrix1);
     cout << "Matrix 2:" << endl;
-    for (vector line : matrix2) {
-        for (int num : line) {
-            cout << num << " ";
+    print_matrix(matrix2);
+    
+    // Matrix Addition
+    vector<vector<int>> matrix3(matrix1.size(), vector<int>(matrix1.size())); 
+    for (int i = 0; i < matrix1.size(); i++) {
+        for (int j = 0; j < matrix1.size(); j++) {
+            matrix3[i][j] = matrix1[i][j] + matrix2[i][j];
         }
-        cout << endl;
     }
-
+    cout << "Addition Matrix:" << endl;
+    print_matrix(matrix3);
 }
