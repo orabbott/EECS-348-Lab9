@@ -66,14 +66,14 @@ int diagnonal_sum(vector<vector<int>> matrix) {
 
 vector<vector<int>> row_swap(vector<vector<int>> matrix, int row1, int row2) {
     int n = matrix.size();
+    if (row1 >= n || row2 >= n) {
+        return matrix;
+    }
     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             retmatrix[i][j] = matrix[i][j];
         }
-    }
-    if (row1 >= n || row2 >= n) {
-        return matrix;
     }
     vector<int> temprow = retmatrix[row1];
     retmatrix[row1] = retmatrix[row2];
@@ -94,6 +94,9 @@ vector<vector<int>> rotate_matrix(vector<vector<int>> matrix) {
 
 vector<vector<int>> col_swap(vector<vector<int>> matrix, int col1, int col2) {
     int n = matrix.size();
+    if (col1 >= n || col2 >= n) {
+        return matrix;
+    }
     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -101,9 +104,6 @@ vector<vector<int>> col_swap(vector<vector<int>> matrix, int col1, int col2) {
         }
     }
     retmatrix = rotate_matrix(retmatrix);
-    if (col1 >= n || col2 >= n) {
-        return matrix;
-    }
     vector<int> temprow = retmatrix[col1];
     retmatrix[col1] = retmatrix[col2];
     retmatrix[col2] = temprow;
@@ -134,22 +134,26 @@ vector<vector<int>> multiply_matrix(vector<vector<int>> matrix1, vector<vector<i
     return matrix3;
 }
 
-// vector<vector<int>> row_swap(vector<vector<int>> matrix, int row1, int row2) {
-//     int n = matrix.size();
-//     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
-//     for (int i = 0; i < n; i++) {
-//         for (int j = 0; j < n; j++) {
-//             retmatrix[i][j] = matrix[i][j];
-//         }
-//     }
-//     if (row1 >= n || row2 >= n) {
-//         return matrix;
-//     }
-//     vector<int> temprow = retmatrix[row1];
-//     retmatrix[row1] = retmatrix[row2];
-//     retmatrix[row2] = temprow;
-//     return retmatrix;
-// }
+vector<vector<int>> replace_val(vector<vector<int>> matrix, int row, int col, int val) {
+    int n = matrix.size();
+    vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
+    if (row >= n || col >= n) {
+        return matrix;
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            retmatrix[i][j] = matrix[i][j];
+        }
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if(i == row && j == col) {
+                retmatrix[i][j] = val;
+            }
+        }
+    }
+    return retmatrix;
+}
 
 int main() {
     ifstream myfile("file.txt");
@@ -208,6 +212,9 @@ int main() {
     cout << diagnonal_sum(matrix1) << endl;
 
     cout << "Matrix 1 with rows 1 and 3 swapped: " << endl;
+    cout << "Initial: " << endl;
+    print_matrix(matrix1);
+    cout << "Swapped: " << endl;
     print_matrix(row_swap(matrix1, 1, 3));
 
     cout << "Matrix 1 with cols 1 and 3 swapped: " << endl;
@@ -215,4 +222,7 @@ int main() {
     print_matrix(matrix1);
     cout << "Swapped: " << endl;
     print_matrix(col_swap(matrix1, 1, 3));
+
+    cout << "Matrix 1 with row 0, column 2 set to 500: " << endl;
+    print_matrix(replace_val(matrix1, 0, 2, 500));
 }
