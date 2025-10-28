@@ -6,9 +6,25 @@
 using namespace std;
 
 void print_matrix(vector<vector<int>> matrix) {
+    int biggest = 0; 
     for (vector line : matrix) {
         for (int num : line) {
-            cout << num << " ";
+            if (num > biggest) {
+                biggest = num;
+            }
+        }
+    }
+    int maxdigits = to_string(biggest).length();
+    for (vector line : matrix) {
+        for (int num : line) {
+            int numdigits = maxdigits - to_string(num).length();
+            string zerostring = "";
+            if (numdigits > 0) {
+                for (int i = 0; i < numdigits; i++) {
+                    zerostring += "0";
+                }
+            }
+            cout << zerostring << num << " ";
         }
         cout << endl;
     }
@@ -50,8 +66,6 @@ int diagnonal_sum(vector<vector<int>> matrix) {
 
 vector<vector<int>> row_swap(vector<vector<int>> matrix, int row1, int row2) {
     int n = matrix.size();
-    row1--;
-    row2--;
     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -80,8 +94,6 @@ vector<vector<int>> rotate_matrix(vector<vector<int>> matrix) {
 
 vector<vector<int>> col_swap(vector<vector<int>> matrix, int col1, int col2) {
     int n = matrix.size();
-    col1--;
-    col2--;
     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -101,6 +113,8 @@ vector<vector<int>> col_swap(vector<vector<int>> matrix, int col1, int col2) {
     return retmatrix;
 }
 
+
+
 vector<vector<int>> multiply_matrix(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
     vector<vector<int>> matrix3;
     int length = matrix1.size();
@@ -119,6 +133,24 @@ vector<vector<int>> multiply_matrix(vector<vector<int>> matrix1, vector<vector<i
     } 
     return matrix3;
 }
+
+// vector<vector<int>> row_swap(vector<vector<int>> matrix, int row1, int row2) {
+//     int n = matrix.size();
+//     vector<vector<int>> retmatrix(matrix.size(), vector<int>(matrix.size()));
+//     for (int i = 0; i < n; i++) {
+//         for (int j = 0; j < n; j++) {
+//             retmatrix[i][j] = matrix[i][j];
+//         }
+//     }
+//     if (row1 >= n || row2 >= n) {
+//         return matrix;
+//     }
+//     vector<int> temprow = retmatrix[row1];
+//     retmatrix[row1] = retmatrix[row2];
+//     retmatrix[row2] = temprow;
+//     return retmatrix;
+// }
+
 int main() {
     ifstream myfile("file.txt");
     if (!myfile) {
