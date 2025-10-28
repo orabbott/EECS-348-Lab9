@@ -14,6 +14,24 @@ void print_matrix(vector<vector<int>> matrix) {
     }
 }
 
+vector<vector<int>> multiply_matrix(vector<vector<int>> matrix1, vector<vector<int>> matrix2) {
+    vector<vector<int>> matrix3;
+    int length = matrix1.size();
+    for (int i = 0; i < length; i++) {
+        vector<int> myline;
+        for (int j = 0; j < length; j++) {
+            int result = 0;
+            for (int k = 0; k < length; k++){
+                if (matrix1[i][k] && matrix2[k][j]) {
+                    result += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+            myline.push_back(result);
+        }
+        matrix3.push_back(myline);
+    } 
+    return matrix3;
+}
 int main() {
     ifstream myfile("file.txt");
     if (!myfile) {
@@ -63,4 +81,7 @@ int main() {
     }
     cout << "Addition Matrix:" << endl;
     print_matrix(matrix3);
+
+    cout << "Multiplication Matrix:" << endl;
+    print_matrix(multiply_matrix(matrix1, matrix2));
 }
